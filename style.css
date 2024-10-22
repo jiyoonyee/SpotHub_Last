@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.headerMenu {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  padding: 0px 20px;
+  top: 5%;
+}
+
+.nowLocation {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.nowLocation > p {
+  word-break: keep-all;
+}
+
+#si {
+  font-size: 30px;
+}
+#gu {
+  font-size: 28px;
+}
+
+.profileNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.profileNav > a > img {
+  width: 85px;
+}
+
+.bottomMenu {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  position: fixed;
+  bottom: 5%;
+  width: 100%;
+  gap: 10px;
+}
+
+.bottomMenu > a > img {
+  width: 85px;
+}
+
+.bottomMenu > a:nth-child(2) > img {
+  width: 110px;
+}

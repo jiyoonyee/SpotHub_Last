@@ -24,14 +24,32 @@
   text-decoration: underline;
 }
 .nowLocation > p {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 0px 30px 5px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+
   word-break: keep-all;
+  opacity: 0;
+  transition: all 1s ease-in-out;
 }
 
 #si {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   font-size: 30px;
+  padding: 1px 5px;
+  padding-top: 5px;
 }
 #gu {
-  font-size: 28px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 25px;
+  padding: 1px 5px;
+  padding-bottom: 5px;
 }
 
 .profileNav {
@@ -42,7 +60,7 @@
 }
 
 .profileNav > a > img {
-  width: 85px;
+  width: 70px;
 }
 
 .bottomMenu {
@@ -55,11 +73,15 @@
   width: 100%;
   gap: 10px;
 }
-
+.bottomMenu > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .bottomMenu > a > img {
-  width: 85px;
+  width: 70px;
 }
 
 .bottomMenu > a:nth-child(2) > img {
-  width: 110px;
+  width: 85px;
 }

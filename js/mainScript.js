@@ -6,6 +6,8 @@ let nowSi = null;
 let nowGu = null;
 let searchFlag = false;
 
+console.log("aaaaaaaaaaaa");
+
 let map; // 전역에서 선언하여 모든 함수에서 접근 가능하도록 설정
 var geocoder = new kakao.maps.services.Geocoder();
 infowindow = new kakao.maps.InfoWindow({ zindex: 1 });

@@ -12,11 +12,14 @@
 .headerMenu {
   display: flex;
   justify-content: space-between;
+  align-items: start;
+  flex-direction: column;
   position: fixed;
   width: 100%;
   padding: 0px 20px;
-  top: 5%;
+  top: 3%;
   z-index: 30;
+  gap: 20px;
 }
 
 .nowLocation {
@@ -28,7 +31,7 @@
   background: rgba(255, 255, 255, 0.1);
 
   box-shadow: 0 0px 30px 5px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(1px);
+  backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3.5px);
   border: 1px solid rgba(255, 255, 255, 0.02);
 
@@ -52,6 +55,65 @@
   padding-bottom: 5px;
 }
 
+.locationInputWrap {
+  width: 100%;
+  /* background-color: rgb(255, 0, 0); */
+  /* From https://css.glass */
+
+  border-radius: 10px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  transition: all 1s ease-in-out;
+  padding: 5px 10px;
+}
+.locationInput {
+  width: 0%;
+  padding: 10px;
+  transition: all 1s ease-in-out;
+  background: rgba(137, 255, 163, 0.155);
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  overflow: hidden;
+  outline: none;
+  border: none;
+  font-size: 18px;
+
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: 2px solid black;
+  /* From https://css.glass */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.locationInput::placeholder {
+  font-size: 12px;
+}
+.inputSearchButton {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.59);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  height: 100%;
+  /* background-color: blueviolet; */
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.inputSearchButton > i {
+  font-size: 22px;
+}
 .profileNav {
   display: flex;
   justify-content: center;
@@ -65,23 +127,30 @@
 
 .bottomMenu {
   z-index: 30;
-  display: flex;
-  justify-content: center;
-  align-items: end;
-  position: fixed;
   bottom: 5%;
   width: 100%;
   gap: 10px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.bottomMenu > a {
+
+.bottomIcon {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.bottomIcon > a {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.bottomMenu > a > img {
+.bottomIcon > a > img {
   width: 70px;
 }
 
-.bottomMenu > a:nth-child(2) > img {
+.bottomIcon > a:nth-child(2) > img {
   width: 85px;
 }

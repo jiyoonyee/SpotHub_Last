@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SpotHub</title>
     <link rel="stylesheet" href="../style/style.css" />
+    <link rel="icon" type="image/svg+xml" href="img/JiinguLogo.png" />
+    <script
+      src="https://kit.fontawesome.com/222eada15c.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -17,22 +22,31 @@
         <p id="si">시</p>
         <p id="gu">구</p>
       </section>
-      <nav class="profileNav">
-        <a href="#"><img src="img/my.png" alt="마이페이지" /></a>
-        <a href="#"><img src="img/heart.png" alt="좋아요" /></a>
-      </nav>
+      <div class="locationInputWrap">
+        <input
+          class="locationInput"
+          type="text"
+          placeholder="상대방의 위치를 입력해주세요"
+        />
+        <div class="inputSearchButton">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </div>
     </section>
 
     <section class="bottomMenu">
-      <a id="saveLink" href="html/menu.html">
-        <img src="img/save.png" alt="저장" />
-      </a>
-      <a id="searchLink" href="#">
-        <img src="img/search.png" alt="검색" />
-      </a>
-      <a id="promisePage" href="#">
-        <img src="img/promise.png" alt="약속 내용" />
-      </a>
+      <section class="bottomIcon">
+        <a id="saveLink" href="html/menu.html">
+          <img src="img/save.png" alt="저장" />
+        </a>
+        <a id="searchLink" href="#">
+          <img src="img/search.png" alt="검색" />
+        </a>
+
+        <a id="promisePage" href="#">
+          <img src="img/promise.png" alt="약속 내용" />
+        </a>
+      </section>
     </section>
 
     <!-- Kakao 지도 API 스크립트 -->

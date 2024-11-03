@@ -6,8 +6,6 @@ let nowSi = null;
 let nowGu = null;
 let searchFlag = false;
 
-console.log("aaaaaaaaaaaa");
-
 let map; // 전역에서 선언하여 모든 함수에서 접근 가능하도록 설정
 var geocoder = new kakao.maps.services.Geocoder();
 infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
@@ -107,30 +105,30 @@ const success = (position) => {
 
   document.querySelector("#searchLink").addEventListener("click", () => {
     searchFlag = !searchFlag;
-    geocoder.addressSearch(
-      "제주특별자치도 제주시 첨단로 242",
-      function (result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          freindsLO = coords.Ma;
-          freindsLa = coords.La;
+    // geocoder.addressSearch(
+    //   "제주특별자치도 제주시 첨단로 242",
+    //   function (result, status) {
+    //     if (status === kakao.maps.services.Status.OK) {
+    //       const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    //       freindsLO = coords.Ma;
+    //       freindsLa = coords.La;
 
-          const friendMarker = new kakao.maps.Marker({
-            map: map,
-            position: coords,
-          });
+    //       const friendMarker = new kakao.maps.Marker({
+    //         map: map,
+    //         position: coords,
+    //       });
 
-          const friendInfoWindow = new kakao.maps.InfoWindow({
-            content:
-              '<div style="width:150px;text-align:center;padding:6px 0;">내 친구의 위치</div>',
-          });
-          friendInfoWindow.open(map, friendMarker);
+    //       const friendInfoWindow = new kakao.maps.InfoWindow({
+    //         content:
+    //           '<div style="width:150px;text-align:center;padding:6px 0;">내 친구의 위치</div>',
+    //       });
+    //       friendInfoWindow.open(map, friendMarker);
 
-          map.setCenter(coords);
-          searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-        }
-      }
-    );
+    //       map.setCenter(coords);
+    //       searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+    //     }
+    //   }
+    // );
     setTimeout(() => {
       searchFlag = !searchFlag;
     }, 1000);
@@ -171,3 +169,12 @@ const displayCenterInfo = (result, status) => {
 navigator.geolocation.getCurrentPosition(success, error, geoOptions);
 
 loadLocaion();
+
+document.querySelector(".inputSearchButton").addEventListener("click", () => {
+  const inputWrap = document.querySelector(".locationInput");
+  if (inputWrap)
+    inputWrap.setAttribute(
+      "style",
+      "width:100%; background: rgba(255, 255, 255, 0.59);"
+    );
+});

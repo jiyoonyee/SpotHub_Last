@@ -8,7 +8,10 @@
   </head>
 
   <body>
-    <div id="map"></div>
+    <!-- 지도 영역 -->
+    <div id="map" style="width: 100%"></div>
+    <!-- 크기 명시 -->
+
     <section class="headerMenu">
       <section class="nowLocation">
         <p id="si">시</p>
@@ -21,20 +24,24 @@
     </section>
 
     <section class="bottomMenu">
-      <a id="saveLink" href="html/menu.html"
-        ><img src="img/save.png" alt="저장"
-      /></a>
-      <a id="searchLink" href="#"><img src="img/search.png" alt="검색" /></a>
-      <a id="promisePage" href="#"
-        ><img src="img/promise.png" alt="약속 내용"
-      /></a>
+      <a id="saveLink" href="html/menu.html">
+        <img src="img/save.png" alt="저장" />
+      </a>
+      <a id="searchLink" href="#">
+        <img src="img/search.png" alt="검색" />
+      </a>
+      <a id="promisePage" href="#">
+        <img src="img/promise.png" alt="약속 내용" />
+      </a>
     </section>
+
+    <!-- Kakao 지도 API 스크립트 -->
     <script
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ebfae367111595448b9ea7b234d51c0b&libraries=services"
+      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ebfae367111595448b9ea7b234d51c0b&libraries=services"
     ></script>
-    <script src="js/mainScript.js"></script>
 
-    <!-- https://apis.map.kakao.com/web/sample/categoryFromBounds/ -->
+    <!-- 메인 JavaScript 파일 -->
+    <script src="js/mainScript.js"></script>
   </body>
 </html>

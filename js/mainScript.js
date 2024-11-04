@@ -18,6 +18,17 @@ let middleInfoWindow = null; // 중간 위치 말풍선
 var geocoder = new kakao.maps.services.Geocoder();
 infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
 
+// 커스텀 오버레이와 마커 배열 선언
+var placeOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 }),
+  contentNode = document.createElement("div"),
+  markers = [],
+  currCategory = "";
+
+// 초기 설정
+contentNode.className = "placeinfo_wrap";
+placeOverlay.setContent(contentNode);
+
+// 지도 설정
 const geoOptions = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -38,7 +49,6 @@ const calculateMiddleLocation = () => {
       middleLongitude
     );
 
-    // 기존 중간 위치 마커와 말풍선이 있다면 삭제
     if (middleMarker) {
       middleMarker.setMap(null);
       if (middleInfoWindow) middleInfoWindow.close();
@@ -93,14 +103,13 @@ const success = (position) => {
   const container = document.querySelector("#map");
   const options = {
     center: new kakao.maps.LatLng(latitude, longitude),
-    level: 3, // 지도 확대 수준
+    level: 3,
   };
 
   map = new kakao.maps.Map(container, options);
 
   const markerPosition = new kakao.maps.LatLng(latitude, longitude);
 
-  // 사용자 위치 마커가 없을 경우에만 생성 (항상 유지)
   if (!marker) {
     marker = new kakao.maps.Marker({ position: markerPosition });
     marker.setMap(map);
@@ -114,47 +123,62 @@ const success = (position) => {
 
   kakao.maps.event.addListener(map, "idle", function () {
     searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+    searchPlaces();
   });
 
   searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 
-  document.querySelector("#searchLink").addEventListener("click", () => {
-    searchFlag = !searchFlag;
-    geocoder.addressSearch(
-      document.querySelector(".locationInput").value,
-      function (result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          freindsLO = coords.Ma;
-          freindsLa = coords.La;
+  document.querySelector(".inputSearchButton").addEventListener("click", () => {
+    const inputWrap = document.querySelector(".locationInput");
+    inputWrap.focus();
 
-          // 기존 친구 위치 마커와 말풍선이 있다면 삭제
-          if (friendMarker) {
-            friendMarker.setMap(null);
-            if (friendInfoWindow) friendInfoWindow.close();
-          }
+    if (!openInput) {
+      inputWrap.setAttribute(
+        "style",
+        "width:100%; background: rgba(255, 255, 255, 0.59);"
+      );
+      inputWrap.classList.add("open");
+      openInput = !openInput;
+    }
 
-          friendMarker = new kakao.maps.Marker({
-            map: map,
-            position: coords,
-          });
-
-          friendInfoWindow = new kakao.maps.InfoWindow({
-            content:
-              '<div style="width:150px;text-align:center;padding:6px 0;">내 친구의 위치</div>',
-          });
-          friendInfoWindow.open(map, friendMarker);
-
-          map.setCenter(coords);
-          searchAddrFromCoords(map.getCenter(), displayCenterInfo);
-        } else {
-          console.log("aa");
-        }
-      }
-    );
-    setTimeout(() => {
+    if (inputWrap.classList.contains("open")) {
       searchFlag = !searchFlag;
-    }, 1000);
+      geocoder.addressSearch(
+        document.querySelector(".locationInput").value,
+        function (result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            freindsLO = coords.Ma;
+            freindsLa = coords.La;
+
+            if (friendMarker) {
+              friendMarker.setMap(null);
+              if (friendInfoWindow) friendInfoWindow.close();
+            }
+
+            friendMarker = new kakao.maps.Marker({
+              map: map,
+              position: coords,
+            });
+
+            friendInfoWindow = new kakao.maps.InfoWindow({
+              content:
+                '<div style="width:150px;text-align:center;padding:6px 0;">내 친구의 위치</div>',
+            });
+            friendInfoWindow.open(map, friendMarker);
+
+            map.setCenter(coords);
+            searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+          }
+        }
+      );
+      setTimeout(() => {
+        searchFlag = !searchFlag;
+      }, 1000);
+    }
+  });
+
+  document.querySelector("#searchLink").addEventListener("click", () => {
     setTimeout(() => {
       calculateMiddleLocation();
     }, 2000);
@@ -189,31 +213,119 @@ const displayCenterInfo = (result, status) => {
   }
 };
 
+// 카테고리별 검색
+function searchPlaces() {
+  if (!currCategory) {
+    return;
+  }
+  placeOverlay.setMap(null);
+  removeMarker();
+  const ps = new kakao.maps.services.Places(map);
+  ps.categorySearch(currCategory, placesSearchCB, { useMapBounds: true });
+}
+
+function placesSearchCB(data, status, pagination) {
+  if (status === kakao.maps.services.Status.OK) {
+    displayPlaces(data);
+  }
+}
+
+function displayPlaces(places) {
+  var order = document.getElementById(currCategory).getAttribute("data-order");
+  for (let i = 0; i < places.length; i++) {
+    const marker = addMarker(
+      new kakao.maps.LatLng(places[i].y, places[i].x),
+      order
+    );
+    (function (marker, place) {
+      kakao.maps.event.addListener(marker, "click", function () {
+        displayPlaceInfo(place);
+      });
+    })(marker, places[i]);
+  }
+}
+
+function addMarker(position, order) {
+  const imageSrc =
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png",
+    imageSize = new kakao.maps.Size(27, 28),
+    imgOptions = {
+      spriteSize: new kakao.maps.Size(72, 208),
+      spriteOrigin: new kakao.maps.Point(46, order * 36),
+      offset: new kakao.maps.Point(11, 28),
+    },
+    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+    marker = new kakao.maps.Marker({
+      position: position,
+      image: markerImage,
+    });
+  marker.setMap(map);
+  markers.push(marker);
+  return marker;
+}
+
+function removeMarker() {
+  for (let i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
+}
+
+function displayPlaceInfo(place) {
+  const content = `<div class="placeinfo">
+    <a class="title" href="${place.place_url}" target="_blank">${
+    place.place_name
+  }</a>
+    <span>${place.road_address_name || place.address_name}</span>
+    <span class="tel">${place.phone}</span>
+  </div>`;
+  contentNode.innerHTML = content;
+  placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+  placeOverlay.setMap(map);
+}
+
+function addCategoryClickEvent() {
+  const category = document.getElementById("category").children;
+  for (let i = 0; i < category.length; i++) {
+    category[i].onclick = onClickCategory;
+  }
+}
+
+function onClickCategory() {
+  placeOverlay.setMap(null);
+  if (this.className === "on") {
+    currCategory = "";
+    changeCategoryClass();
+    removeMarker();
+  } else {
+    currCategory = this.id;
+    changeCategoryClass(this);
+    searchPlaces();
+  }
+}
+
+function changeCategoryClass(el) {
+  const category = document.getElementById("category").children;
+  for (let i = 0; i < category.length; i++) {
+    category[i].className = "";
+  }
+  if (el) {
+    el.className = "on";
+  }
+}
+
 navigator.geolocation.getCurrentPosition(success, error, geoOptions);
 
 loadLocaion();
 
-document.querySelector(".inputSearchButton").addEventListener("click", () => {
-  const inputWrap = document.querySelector(".locationInput");
-  inputWrap.focus();
-
-  if (!openInput) {
-    inputWrap.setAttribute(
-      "style",
-      "width:100%; background: rgba(255, 255, 255, 0.59);"
-    );
-    openInput = !openInput;
-  } else {
-    inputWrap.setAttribute(
-      "style",
-      "width:0%; background: rgba(255, 255, 255, 0.59);"
-    );
-    inputWrap.blur();
-    openInput = !openInput;
-  }
-});
-
 document.querySelector("#map").addEventListener("click", () => {
   const inputWrap = document.querySelector(".locationInput");
+  inputWrap.setAttribute(
+    "style",
+    "width:0%; background: rgba(255, 255, 255, 0.59);"
+  );
   inputWrap.blur();
+  openInput = !openInput;
 });
+
+addCategoryClickEvent(); // 카테고리 클릭 이벤트 초기화

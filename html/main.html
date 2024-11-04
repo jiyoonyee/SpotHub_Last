@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jiing goo</title>
+    <link rel="stylesheet" href="../style/style.css" />
+    <link rel="icon" type="image/svg+xml" href="../img/JiinguLogo.png" />
+    <script
+      src="https://kit.fontawesome.com/222eada15c.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <!-- 지도 영역 -->
+    <div id="map" style="width: 100%"></div>
+    <!-- 크기 명시 -->
+
+    <section class="selectedSpot">
+      <div class="placeinfoWrap">
+        <div class="placeinfo">
+          <a class="title" href="" target="_blank"></a>
+          <span></span>
+          <span class="tel"></span>
+        </div>
+      </div>
+      <div class="closeButton"><i class="fa-solid fa-chevron-left"></i></div>
+    </section>
+
+    <div class="categoryWrap">
+      <ul id="category">
+        <li id="BK9" data-order="0">
+          <i class="fa-solid fa-vault"></i>
+          은행
+        </li>
+        <li id="MT1" data-order="1">
+          <span class="category_bg mart"></span>
+          마트
+        </li>
+        <li id="PM9" data-order="2">
+          <span class="category_bg pharmacy"></span>
+          약국
+        </li>
+        <li id="OL7" data-order="3">
+          <span class="category_bg oil"></span>
+          주유소
+        </li>
+        <li id="CE7" data-order="4">
+          <span class="category_bg cafe"></span>
+          카페
+        </li>
+        <li id="CS2" data-order="5">
+          <span class="category_bg store"></span>
+          편의점
+        </li>
+      </ul>
+    </div>
+
+    <section class="headerMenu">
+      <section class="nowLocation">
+        <p id="si">시</p>
+        <p id="gu">구</p>
+      </section>
+      <div class="locationInputWrap">
+        <input
+          class="locationInput"
+          type="text"
+          placeholder="예) 제주특별자치도 제주시 첨단로 242"
+        />
+        <div class="inputSearchButton">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottomMenu">
+      <section class="bottomIcon">
+        <a id="saveLink" href="#">
+          <img src="../img/save.png" alt="저장" />
+        </a>
+        <a id="searchLink" href="#">
+          <img src="../img/search.png" alt="검색" />
+        </a>
+
+        <a id="promisePage" href="#">
+          <img src="../img/promise.png" alt="약속 내용" />
+        </a>
+      </section>
+    </section>
+
+    <!-- Kakao 지도 API 스크립트 -->
+    <script
+      type="text/javascript"
+      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ebfae367111595448b9ea7b234d51c0b&libraries=services"
+    ></script>
+
+    <!-- 메인 JavaScript 파일 -->
+    <script src="../js/mainScript.js"></script>
+  </body>
+</html>

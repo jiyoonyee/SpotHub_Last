@@ -6,6 +6,7 @@ let nowSi = null;
 let nowGu = null;
 let searchFlag = false;
 let openInput = false;
+let savePageOpen = false;
 
 let map;
 let marker = null; // 사용자 위치 마커
@@ -181,7 +182,7 @@ const success = (position) => {
   document.querySelector("#searchLink").addEventListener("click", () => {
     setTimeout(() => {
       calculateMiddleLocation();
-    }, 2000);
+    }, 1000);
   });
 };
 
@@ -231,8 +232,15 @@ function placesSearchCB(data, status, pagination) {
 }
 
 function displayPlaces(places) {
-  var order = document.getElementById(currCategory).getAttribute("data-order");
+  const order = document
+    .getElementById(currCategory)
+    .getAttribute("data-order");
+  const placeinfoWrap = document.querySelector(".placeinfoWrap"); // placeinfoWrap 요소 가져오기
+
+  placeinfoWrap.innerHTML = ""; // 이전 결과 초기화
+
   for (let i = 0; i < places.length; i++) {
+    // 마커 추가
     const marker = addMarker(
       new kakao.maps.LatLng(places[i].y, places[i].x),
       order
@@ -242,6 +250,29 @@ function displayPlaces(places) {
         displayPlaceInfo(place);
       });
     })(marker, places[i]);
+
+    // 장소 정보 생성 및 추가
+    const placeInfoDiv = document.createElement("div");
+    placeInfoDiv.className = "placeinfo";
+
+    const titleLink = document.createElement("a");
+    titleLink.className = "title";
+    titleLink.href = places[i].place_url;
+    titleLink.target = "_blank";
+    titleLink.textContent = places[i].place_name;
+    placeInfoDiv.appendChild(titleLink);
+
+    const addressSpan = document.createElement("span");
+    addressSpan.textContent =
+      places[i].road_address_name || places[i].address_name;
+    placeInfoDiv.appendChild(addressSpan);
+
+    const telSpan = document.createElement("span");
+    telSpan.className = "tel";
+    telSpan.textContent = places[i].phone;
+    placeInfoDiv.appendChild(telSpan);
+
+    placeinfoWrap.appendChild(placeInfoDiv); // placeinfoWrap에 추가
   }
 }
 
@@ -261,6 +292,7 @@ function addMarker(position, order) {
     });
   marker.setMap(map);
   markers.push(marker);
+
   return marker;
 }
 
@@ -270,17 +302,28 @@ function removeMarker() {
   }
   markers = [];
 }
-
+const placeInfoClone = document.querySelector(".placeinfo").cloneNode(true);
 function displayPlaceInfo(place) {
-  const content = `<div class="placeinfo">
-    <a class="title" href="${place.place_url}" target="_blank">${
-    place.place_name
-  }</a>
-    <span>${place.road_address_name || place.address_name}</span>
-    <span class="tel">${place.phone}</span>
-  </div>`;
-  contentNode.innerHTML = content;
-  placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+  const placeInfo = document.querySelector(".placeinfo");
+
+  placeInfoClone.children[0].href = place.place_url;
+  placeInfoClone.children[0].textContent = place.place_name;
+  placeInfoClone.children[1].textContent =
+    place.road_address_name || place.address_name;
+  placeInfoClone.children[2].textContent = place.phone;
+
+  placeInfo.appendChild(placeInfoClone);
+  console.log(placeInfoClone);
+
+  // const content = `<div class="placeinfo">
+  //   <a class="title" href="${place.place_url}" target="_blank">${
+  //   place.place_name
+  // }</a>
+  //   <span>${place.road_address_name || place.address_name}</span>
+  //   <span class="tel">${place.phone}</span>
+  // </div>`;
+  // contentNode.innerHTML = content;
+  // placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
   placeOverlay.setMap(map);
 }
 
@@ -326,6 +369,25 @@ document.querySelector("#map").addEventListener("click", () => {
   );
   inputWrap.blur();
   openInput = !openInput;
+});
+
+document.querySelector("#saveLink").addEventListener("click", () => {
+  const savePage = document.querySelector(".selectedSpot");
+
+  if (!savePageOpen) {
+    savePage.setAttribute("style", "transform: translateX(0%);");
+    savePageOpen = !savePageOpen;
+    console.log(markers);
+  } else {
+    savePage.setAttribute("style", "transform: translateX(-100%);");
+    savePageOpen = !savePageOpen;
+  }
+});
+
+document.querySelector(".closeButton").addEventListener("click", (e) => {
+  document
+    .querySelector(".selectedSpot")
+    .setAttribute("style", "transform: translateX(-100%);");
 });
 
 addCategoryClickEvent(); // 카테고리 클릭 이벤트 초기화

@@ -307,7 +307,7 @@ function displayPlaceInfo(place) {
     <i class="fa-solid fa-chevron-right"></i>
   </a>`;
   contentNode.innerHTML = content;
-  placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+  
   placeOverlay.setMap(map);
 }
 

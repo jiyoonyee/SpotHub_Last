@@ -5,11 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jiing goo</title>
     <link rel="stylesheet" href="../style/style.css" />
-    <link rel="icon" type="image/svg+xml" href="../img/JiinguLogo.png" />
+    <script
+      type="text/javascript"
+      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ebfae367111595448b9ea7b234d51c0b&libraries=services"
+    ></script>
     <script
       src="https://kit.fontawesome.com/222eada15c.js"
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../splash/img/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../splash/img/favicon32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../splash/img/favicon16.png"
+    />
+    <!-- Kakao 지도 API 스크립트 -->
   </head>
 
   <body>
@@ -20,9 +41,9 @@
     <section class="selectedSpot">
       <div class="placeinfoWrap">
         <div class="placeinfo">
-          <a class="title" href="" target="_blank"></a>
-          <span></span>
-          <span class="tel"></span>
+          <a class="title" href="#" target="_blank">카테고리를 선택해주세요</a>
+
+          <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
       <div class="closeButton"><i class="fa-solid fa-chevron-left"></i></div>
@@ -30,29 +51,29 @@
 
     <div class="categoryWrap">
       <ul id="category">
-        <li id="BK9" data-order="0">
-          <i class="fa-solid fa-vault"></i>
-          은행
-        </li>
-        <li id="MT1" data-order="1">
-          <span class="category_bg mart"></span>
-          마트
-        </li>
-        <li id="PM9" data-order="2">
-          <span class="category_bg pharmacy"></span>
-          약국
-        </li>
-        <li id="OL7" data-order="3">
-          <span class="category_bg oil"></span>
-          주유소
-        </li>
-        <li id="CE7" data-order="4">
-          <span class="category_bg cafe"></span>
+        <li id="CE7" data-order="0" class="categoryName">
+          <i class="fa-solid fa-mug-saucer"></i>
           카페
         </li>
-        <li id="CS2" data-order="5">
-          <span class="category_bg store"></span>
-          편의점
+        <li id="CT1" data-order="1" class="categoryName">
+          <i class="fa-solid fa-people-roof"></i>
+          문화시설
+        </li>
+        <li id="SW8" data-order="2" class="categoryName">
+          <i class="fa-solid fa-train-subway"></i>
+          지하철
+        </li>
+        <li id="PK6" data-order="3" class="categoryName">
+          <i class="fa-solid fa-square-parking"></i>
+          주차장
+        </li>
+        <li id="AD5" data-order="4" class="categoryName">
+          <i class="fa-solid fa-bed"></i>
+          숙박
+        </li>
+        <li id="FD6" data-order="5" class="categoryName">
+          <i class="fa-solid fa-utensils"></i>
+          음식점
         </li>
       </ul>
     </div>
@@ -66,7 +87,7 @@
         <input
           class="locationInput"
           type="text"
-          placeholder="예) 제주특별자치도 제주시 첨단로 242"
+          placeholder="상대방의 주소 예) 제주특별자치도 제주시 첨단로 242"
         />
         <div class="inputSearchButton">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -88,12 +109,6 @@
         </a>
       </section>
     </section>
-
-    <!-- Kakao 지도 API 스크립트 -->
-    <script
-      type="text/javascript"
-      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ebfae367111595448b9ea7b234d51c0b&libraries=services"
-    ></script>
 
     <!-- 메인 JavaScript 파일 -->
     <script src="../js/mainScript.js"></script>

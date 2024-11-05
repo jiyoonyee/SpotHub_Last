@@ -21,48 +21,70 @@ a {
   align-items: start;
   top: 0;
   left: 0%;
-  width: 100%;
+  width: 65%;
   height: 100vh;
-  background-color: white;
+  background: rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 0px 30px 5px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3.5px);
   z-index: 100;
   transition: all 0.5s ease-in-out;
   transform: translateX(-100%);
+  overflow-y: scroll;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  /* overflow-x: hidden; */
+}
+.selectedSpot::-webkit-scrollbar {
+  display: none;
 }
 
 .placeinfoWrap {
-  width: 100%;
+  width: 90%;
+  height: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   gap: 20px;
-  overflow-y: scroll;
 }
 
 .placeinfo {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d95050;
   width: 100%;
   padding: 8px 4px;
-  background-color: rgba(188, 188, 188, 0.548);
   border-radius: 5px;
+  gap: 10px;
+  color: white;
 }
 
 .placeinfo > a {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
-  text-decoration: underline;
+  word-break: keep-all;
+  color: white;
 }
 
+.placeinfo > i {
+  text-align: end;
+}
 .closeButton {
+  position: sticky;
+  top: 0;
   height: 100%;
+  width: 10%;
   padding: 0px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-left: 1px solid black;
+  background-color: white;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .headerMenu {
@@ -213,15 +235,14 @@ a {
 
 .categoryWrap {
   position: fixed;
+  right: 5%;
   top: 20%;
-  width: 100%;
+  /* width: 100%; */
   z-index: 20;
-  padding: 20px;
 }
 
 #category {
   list-style: none;
-  width: 100%;
   display: flex;
   justify-content: start;
   align-items: end;
@@ -230,8 +251,7 @@ a {
   gap: 20px;
 }
 
-#category > li {
-  background-color: white;
+.categoryName {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.48);
   border-radius: 5px;
@@ -240,10 +260,35 @@ a {
   -webkit-backdrop-filter: blur(7.8px);
   padding: 5px 10px;
   font-weight: bold;
+  transition: all 0.5s ease-out;
+}
+.categoryName.on {
+  background: rgba(0, 0, 0, 0.61);
+  color: white;
 }
 
 #category > li:hover {
   cursor: pointer;
+}
+
+.placeinfoOnMap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: #d95050;
+  gap: 50px;
+  color: white;
+  border-radius: 10px;
+  position: fixed;
+  top: 210px;
+  left: 20px;
+  margin: 0 auto;
+  z-index: 100;
+}
+.placeinfoOnMap > p {
+  color: white;
+  font-weight: bold;
 }
 
 @media screen and (min-width: 800px) {
@@ -252,5 +297,15 @@ a {
   }
   #category {
     flex-direction: row;
+  }
+  .categoryWrap {
+    left: 20px;
+    top: 260px;
+  }
+  .placeinfoWrap {
+    width: 95%;
+  }
+  .closeButton {
+    width: 5%;
   }
 }

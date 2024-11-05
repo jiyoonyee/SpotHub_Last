@@ -262,28 +262,24 @@ function displayPlaces(places) {
     titleLink.textContent = places[i].place_name;
     placeInfoDiv.appendChild(titleLink);
 
-    const addressSpan = document.createElement("span");
-    addressSpan.textContent =
-      places[i].road_address_name || places[i].address_name;
-    placeInfoDiv.appendChild(addressSpan);
+    const addressSpan = document.createElement("i");
+    addressSpan.className = "fa-solid fa-chevron-right";
 
-    const telSpan = document.createElement("span");
-    telSpan.className = "tel";
-    telSpan.textContent = places[i].phone;
-    placeInfoDiv.appendChild(telSpan);
+    placeInfoDiv.appendChild(addressSpan);
 
     placeinfoWrap.appendChild(placeInfoDiv); // placeinfoWrap에 추가
   }
 }
 
 function addMarker(position, order) {
-  const imageSrc =
-      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png",
+  // const imageSrc =
+  //     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png",
+  const imageSrc = "../img/heart.png",
     imageSize = new kakao.maps.Size(27, 28),
     imgOptions = {
-      spriteSize: new kakao.maps.Size(72, 208),
-      spriteOrigin: new kakao.maps.Point(46, order * 36),
-      offset: new kakao.maps.Point(11, 28),
+      spriteSize: new kakao.maps.Size(50, 50),
+      spriteOrigin: new kakao.maps.Point(45),
+      offset: new kakao.maps.Point(-11, 28),
     },
     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
     marker = new kakao.maps.Marker({
@@ -302,28 +298,16 @@ function removeMarker() {
   }
   markers = [];
 }
-const placeInfoClone = document.querySelector(".placeinfo").cloneNode(true);
+let placeInfoClone = document.querySelector(".placeinfo").cloneNode(true);
+console.log(placeInfoClone);
 function displayPlaceInfo(place) {
-  const placeInfo = document.querySelector(".placeinfo");
-
-  placeInfoClone.children[0].href = place.place_url;
-  placeInfoClone.children[0].textContent = place.place_name;
-  placeInfoClone.children[1].textContent =
-    place.road_address_name || place.address_name;
-  placeInfoClone.children[2].textContent = place.phone;
-
-  placeInfo.appendChild(placeInfoClone);
-  console.log(placeInfoClone);
-
-  // const content = `<div class="placeinfo">
-  //   <a class="title" href="${place.place_url}" target="_blank">${
-  //   place.place_name
-  // }</a>
-  //   <span>${place.road_address_name || place.address_name}</span>
-  //   <span class="tel">${place.phone}</span>
-  // </div>`;
-  // contentNode.innerHTML = content;
-  // placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+  const content = `
+  <a class="placeinfoOnMap" href="${place.place_url}">
+    <p class="title"  target="_blank">${place.place_name}</p>
+    <i class="fa-solid fa-chevron-right"></i>
+  </a>`;
+  contentNode.innerHTML = content;
+  placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
   placeOverlay.setMap(map);
 }
 
@@ -350,10 +334,20 @@ function onClickCategory() {
 function changeCategoryClass(el) {
   const category = document.getElementById("category").children;
   for (let i = 0; i < category.length; i++) {
-    category[i].className = "";
+    category[i].classList.remove("on");
   }
   if (el) {
-    el.className = "on";
+    el.classList.add("on");
+  }
+}
+
+function changeCategoryClassInfo(el) {
+  const category = document.getElementById("category").children;
+  for (let i = 0; i < category.length; i++) {
+    category[i].classList.remove("on");
+  }
+  if (el) {
+    el.classList.add("on");
   }
 }
 
@@ -378,9 +372,6 @@ document.querySelector("#saveLink").addEventListener("click", () => {
     savePage.setAttribute("style", "transform: translateX(0%);");
     savePageOpen = !savePageOpen;
     console.log(markers);
-  } else {
-    savePage.setAttribute("style", "transform: translateX(-100%);");
-    savePageOpen = !savePageOpen;
   }
 });
 
@@ -388,6 +379,7 @@ document.querySelector(".closeButton").addEventListener("click", (e) => {
   document
     .querySelector(".selectedSpot")
     .setAttribute("style", "transform: translateX(-100%);");
+  savePageOpen = !savePageOpen;
 });
 
 addCategoryClickEvent(); // 카테고리 클릭 이벤트 초기화

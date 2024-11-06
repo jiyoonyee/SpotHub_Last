@@ -236,7 +236,7 @@ a {
 .categoryWrap {
   position: fixed;
   right: 5%;
-  top: 20%;
+  top: 22%;
   /* width: 100%; */
   z-index: 20;
 }
@@ -281,7 +281,7 @@ a {
   color: white;
   border-radius: 10px;
   position: fixed;
-  top: 20%;
+  top: 22%;
   left: 20px;
   z-index: 100;
   /* width: 100%; */

@@ -9,6 +9,7 @@
       type="text/javascript"
       src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=ebfae367111595448b9ea7b234d51c0b&libraries=services"
     ></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script
       src="https://kit.fontawesome.com/222eada15c.js"
       crossorigin="anonymous"
@@ -20,6 +21,7 @@
     />
     <link
       rel="icon"
+      d
       type="image/png"
       sizes="32x32"
       href="../splash/img/favicon32.png"
@@ -37,6 +39,16 @@
     <!-- 지도 영역 -->
     <div id="map" style="width: 100%"></div>
     <!-- 크기 명시 -->
+
+    <!-- 주소 검색 -->
+    <div class="searchPopup">
+      <div class="locationSearch"></div>
+    </div>
+
+    <a class="placeinfoOnMap" href="#">
+      <p class="title" target="_blank">카테고리 위치를 선택해주세요!</p>
+      <i class="fa-solid fa-chevron-right"></i>
+    </a>
 
     <section class="selectedSpot">
       <div class="placeinfoWrap">
@@ -87,7 +99,7 @@
         <input
           class="locationInput"
           type="text"
-          placeholder="상대방의 주소 예) 제주특별자치도 제주시 첨단로 242"
+          placeholder="상대방의 주소를 입력해주세요"
         />
         <div class="inputSearchButton">
           <i class="fa-solid fa-magnifying-glass"></i>

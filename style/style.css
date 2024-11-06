@@ -284,13 +284,11 @@ a {
   top: 21%;
   left: 20px;
   z-index: 100;
-  width: 50%;
+  /* width: 100%; */
 }
 .placeinfoOnMap > p {
   color: white;
   font-weight: bold;
-  word-break: keep-all;
-  width: 100%;
 }
 
 .searchPopup {

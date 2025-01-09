@@ -329,7 +329,7 @@ a {
 .categoryWrap {
   position: fixed;
   right: 5%;
-  top: 210px;
+  top: 200px;
   /* width: 100%; */
   z-index: 20;
 }
@@ -374,7 +374,7 @@ a {
   color: white;
   border-radius: 10px;
   position: fixed;
-  top: 210px;
+  top: 200px;
   left: 20px;
   z-index: 100;
   /* width: 100%; */
@@ -416,10 +416,10 @@ a {
   }
   .categoryWrap {
     left: 20px;
-    top: 25%;
+    top: 250px;
   }
   .placeinfoOnMap {
-    top: 20%;
+    top: 200px;
   }
   .placeinfoWrap {
     width: 95%;

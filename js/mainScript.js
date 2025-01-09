@@ -16,6 +16,8 @@ let middleMarker = null; // 중간 위치 마커
 let friendInfoWindow = null; // 친구 위치 말풍선
 let middleInfoWindow = null; // 중간 위치 말풍선
 
+let locationImage = null;
+
 var geocoder = new kakao.maps.services.Geocoder();
 infowindow = new kakao.maps.InfoWindow({ zindex: 1 });
 
@@ -274,12 +276,12 @@ function displayPlaces(places) {
 function addMarker(position, order) {
   // const imageSrc =
   //     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png",
-  const imageSrc = "../img/heart.png",
+  const imageSrc = `../img/${locationImage}.png`,
     imageSize = new kakao.maps.Size(27, 28),
     imgOptions = {
-      spriteSize: new kakao.maps.Size(50, 50),
+      spriteSize: new kakao.maps.Size(40, 40),
       spriteOrigin: new kakao.maps.Point(45),
-      offset: new kakao.maps.Point(-11, 28),
+      offset: new kakao.maps.Point(-25, 28),
     },
     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
     marker = new kakao.maps.Marker({
@@ -314,34 +316,33 @@ function displayPlaceInfo(place) {
 }
 
 function addCategoryClickEvent() {
-  const category = document.getElementById("category").children;
+  const category = document.querySelectorAll(".categoryName");
   for (let i = 0; i < category.length; i++) {
-    category[i].onclick = onClickCategory;
+    // category[i].onclick = onClickCategory;
+    category[i].addEventListener("click", (e) => {
+      placeOverlay.setMap(null);
+      if (document.querySelector(".categoryName.on")) {
+        document.querySelector(".categoryName.on").classList.remove("on");
+        currCategory = "";
+        removeMarker();
+      }
+      currCategory = e.target.id;
+      locationImage = e.target.getAttribute("name");
+      e.target.classList.add("on");
+      searchPlaces();
+    });
   }
 }
 
-function onClickCategory() {
-  placeOverlay.setMap(null);
-  if (this.className === "on") {
-    currCategory = "";
-    changeCategoryClass();
-    removeMarker();
-  } else {
-    currCategory = this.id;
-    changeCategoryClass(this);
-    searchPlaces();
-  }
-}
-
-function changeCategoryClass(el) {
-  const category = document.getElementById("category").children;
-  for (let i = 0; i < category.length; i++) {
-    category[i].classList.remove("on");
-  }
-  if (el) {
-    el.classList.add("on");
-  }
-}
+// function changeCategoryClass(el) {
+//   const category = document.getElementById("category").children;
+//   for (let i = 0; i < category.length; i++) {
+//     category[i].classList.remove("on");
+//   }
+//   if (el) {
+//     el.classList.add("on");
+//   }
+// }
 
 function changeCategoryClassInfo(el) {
   const category = document.getElementById("category").children;
@@ -373,7 +374,6 @@ document.querySelector("#saveLink").addEventListener("click", () => {
   if (!savePageOpen) {
     savePage.setAttribute("style", "transform: translateX(0%);");
     savePageOpen = !savePageOpen;
-    console.log(markers);
   }
 });
 
@@ -437,6 +437,7 @@ function sample3_execDaumPostcode() {
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
       document.querySelector(".locationInput").value = addr;
+      document.querySelector(".peopleLocation").textContent = addr;
 
       // iframe을 넣은 element를 안보이게 한다.
       // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -456,7 +457,7 @@ function sample3_execDaumPostcode() {
   // iframe을 넣은 element를 보이게 한다.
   element_wrap.style.display = "block";
 }
-
+const freindsLocation = document.querySelector(".peopleInfo").cloneNode(true);
 document.querySelector(".locationInput").addEventListener("click", () => {
   document.querySelector(".searchPopup").style.display = "flex";
   sample3_execDaumPostcode();
@@ -464,6 +465,28 @@ document.querySelector(".locationInput").addEventListener("click", () => {
 
 document.querySelector(".searchPopup").addEventListener("click", (e) => {
   e.target.style.display = "none";
+});
+
+document.querySelector("#promisePage").addEventListener("click", () => {
+  document
+    .querySelector(".addPeople")
+    .setAttribute("style", "transform: translateY(0%)");
+});
+document.querySelector(".peopleCloseButton").addEventListener("click", (e) => {
+  document
+    .querySelector(".addPeople")
+    .setAttribute("style", "transform: translateY(100%);");
+});
+document.querySelector(".addPeopleButton").addEventListener("click", () => {
+  const cloneFreinds = document.querySelector(".peopleInfo").cloneNode(true);
+  cloneFreinds.querySelector(".peopleLocation").textContent =
+    "장소를 선택해주세요";
+  cloneFreinds.classList.remove("select");
+  console.log(cloneFreinds);
+  document.querySelector(".peopleWrap").append(cloneFreinds);
+  document.querySelector(".peopleInfo").addEventListener("click", (e) => {
+    e.target.classList.add("on");
+  });
 });
 
 addCategoryClickEvent(); // 카테고리 클릭 이벤트 초기화

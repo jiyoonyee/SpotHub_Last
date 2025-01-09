@@ -14,6 +14,99 @@ a {
   height: 100vh;
 }
 
+.addPeople {
+  position: fixed;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  bottom: 0%;
+  right: 0%;
+  width: 100%;
+  height: 40vh;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0px 30px 5px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3.5px);
+  z-index: 100;
+  transition: all 0.5s ease-in-out;
+  transform: translateY(100%);
+  overflow-y: scroll;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+  /* overflow-x: hidden; */
+}
+
+.addPeople::-webkit-scrollbar {
+  display: none;
+}
+
+.peopleWrap {
+  width: 100%;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.peopleInfo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #d95050;
+  padding: 5px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+.peopleInfo.select {
+  border: 3px solid #272020;
+}
+
+.peopleInfo > * {
+  color: white;
+  font-weight: bold;
+}
+
+.addPeopleButton {
+  width: 50px;
+  height: 50px;
+  min-height: 50px;
+  background-color: #d95050;
+  padding: 5px;
+  border-radius: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.addPeopleButton > i {
+  color: white;
+  font-size: 24px;
+}
+
+.peopleCloseButton {
+  position: sticky;
+  top: 0px;
+  z-index: 1000;
+  width: 100%;
+  height: 30px;
+  min-height: 30px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.peopleCloseButton > i {
+  color: black;
+}
+
 .selectedSpot {
   position: fixed;
   display: flex;
@@ -73,8 +166,8 @@ a {
   text-align: end;
 }
 .closeButton {
-  position: sticky;
-  top: 0;
+  /* position: fixed;
+  top: 0px; */
   height: 100%;
   width: 10%;
   padding: 0px 20px;
